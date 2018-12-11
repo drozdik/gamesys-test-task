@@ -1,0 +1,15 @@
+Read input data from any http source (you to choose, rss feed, twitter reed...)  every x seconds-minutes
+
+// for api doc This method can only return up to 3,200 of a user’s most recent Tweets
+// what if more?
+
+// rate Requests / 15-min window (user auth)	900
+
+make simple authenticated request to twitter
+
+no authentication...
+
+
+Twitter4J
+
+http://lorem-rss.herokuapp.com/feed?unit=second&interval=30 read rss from here
