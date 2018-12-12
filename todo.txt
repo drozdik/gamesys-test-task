@@ -18,3 +18,7 @@ check exceptional cases while parsing
 maybe extract single item parser to separate class
 
 add persistence <<<
+
+check profiles.. development / production etc
+
+make one acceptance test, stub for rss feed, set via configuration file and run happy case + one fail case?
