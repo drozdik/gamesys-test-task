@@ -24,4 +24,6 @@ public class RssItemsStorage {
     public void save(RssItem rssItem) {
         rssItemRepository.saveAndFlush(rssItem);
     }
+
+
 }

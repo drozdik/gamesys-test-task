@@ -10,6 +10,6 @@ public class GetBodyFromUrlTest {
 
     @Test
     public void name() throws Exception {
-        getBodyFromUrl.getResponseBody("");
+        getBodyFromUrl.getResponseBody();
     }
 }
