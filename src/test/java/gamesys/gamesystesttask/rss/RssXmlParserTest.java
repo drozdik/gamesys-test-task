@@ -134,9 +134,6 @@ public class RssXmlParserTest {
         assertThat(description, is(""));
     }
 
-    // should throw if can't parse
-    //
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 

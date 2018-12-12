@@ -1,5 +1,6 @@
 package gamesys.gamesystesttask.rss;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class RssXmlParser {
 
     private String getDescriptionTextFromItem(String itemXml) {
         String descriptionText = getDescriptionElementText(itemXml);
-        if(descriptionText == null){
+        if (descriptionText == null) {
             return "";
         }
         return stripCDATA(descriptionText);
@@ -26,7 +27,7 @@ public class RssXmlParser {
 
     private String getDescriptionElementText(String itemXml) {
         int indexOfDescriptionStart = itemXml.indexOf("<description>");
-        if(indexOfDescriptionStart == -1){
+        if (indexOfDescriptionStart == -1) {
             return null;
         }
         int indexOfDescriptionEnd = itemXml.indexOf("</description>");
@@ -54,9 +55,22 @@ public class RssXmlParser {
                 .collect(Collectors.toList());
     }
 
-    private List<String> getAllItemXmls(String multipleItemsRssXml) {
-        int cursor = 0;
-        return null;
+    private List<String> getAllItemXmls(String rssXml) {
+        int indexOfItemOpening = 0;
+        int indexOfItemClosing = 0;
+        int indexOfItemEnd = 0;
+        List<String> items = new ArrayList<>();
+
+        while (true) {
+            indexOfItemOpening = rssXml.indexOf("<item>", indexOfItemEnd);
+            if (indexOfItemOpening == -1) {
+                break;
+            }
+            indexOfItemClosing = rssXml.indexOf("</item>", indexOfItemEnd);
+            indexOfItemEnd = indexOfItemClosing + "</item>".length();
+            items.add(rssXml.substring(indexOfItemOpening, indexOfItemEnd));
+        }
+        return items;
     }
 
 }

@@ -13,3 +13,8 @@ no authentication...
 Twitter4J
 
 http://lorem-rss.herokuapp.com/feed?unit=second&interval=30 read rss from here
+
+check exceptional cases while parsing
+maybe extract single item parser to separate class
+
+add persistence <<<
