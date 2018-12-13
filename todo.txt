@@ -5,17 +5,9 @@ Read input data from any http source (you to choose, rss feed, twitter reed...) 
 
 // rate Requests / 15-min window (user auth)	900
 
-make simple authenticated request to twitter
-
-no authentication...
-
-
-Twitter4J
-
 http://lorem-rss.herokuapp.com/feed?unit=second&interval=30 read rss from here
 
 check exceptional cases while parsing
-maybe extract single item parser to separate class
 
 check profiles.. development / production etc
 
@@ -26,8 +18,6 @@ make able to pick another port, if guys have 8080 busy
 inherit spring boot test from one common-parent
 
 rss can have empty title, description pub date >> what standart says???
-
-do not store duplicates <<
 
 disable scheduling for tests
 
