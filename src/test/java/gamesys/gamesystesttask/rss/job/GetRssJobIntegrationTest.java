@@ -1,17 +1,12 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss.job;
 
-import gamesys.gamesystesttask.http.GetBodyFromUrl;
-import gamesys.gamesystesttask.rss.RssItemsStorage;
-import org.hamcrest.Matchers;
+import gamesys.gamesystesttask.rss.job.GetRssJob;
+import gamesys.gamesystesttask.rss.storage.RssItemsStorage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;

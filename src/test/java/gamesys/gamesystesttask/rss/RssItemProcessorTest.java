@@ -1,13 +1,13 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss;
 
 import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.RssItemProcessor;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
-import java.time.ZonedDateTime;
 
-import static gamesys.gamesystesttask.RssItemProcessor.SIMON_SAYS;
+import static gamesys.gamesystesttask.rss.RssItemProcessor.SIMON_SAYS;
 import static org.junit.Assert.*;
 
 public class RssItemProcessorTest {

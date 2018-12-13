@@ -1,19 +1,18 @@
-package gamesys.gamesystesttask.http;
+package gamesys.gamesystesttask.rss.http;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-public class GetBodyFromUrlTest {
+public class HttpRssFeedReaderTest {
 
-    private GetBodyFromUrl getBodyFromUrl = new GetBodyFromUrl();
+    private HttpRssFeedReader httpRssFeedReader = new HttpRssFeedReader();
 
     @Test
     public void shouldReceiveNonEmptyBody() throws Exception {
-        String body = getBodyFromUrl.getResponseBody();
+        String body = httpRssFeedReader.getRssXmlFromFeed();
 
         // then
         assertThat(body, not(isEmptyOrNullString()));

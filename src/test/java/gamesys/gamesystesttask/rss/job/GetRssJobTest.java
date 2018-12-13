@@ -1,23 +1,21 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss.job;
 
+import gamesys.gamesystesttask.rss.RssItemProcessor;
+import gamesys.gamesystesttask.rss.RssService;
+import gamesys.gamesystesttask.rss.job.GetRssJob;
 import gamesys.gamesystesttask.rss.RssItem;
-import gamesys.gamesystesttask.rss.RssItemsStorage;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
+import gamesys.gamesystesttask.rss.storage.RssItemsStorage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.lang.model.util.Types;
-import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

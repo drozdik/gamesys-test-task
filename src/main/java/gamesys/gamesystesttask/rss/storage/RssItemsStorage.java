@@ -1,5 +1,6 @@
-package gamesys.gamesystesttask.rss;
+package gamesys.gamesystesttask.rss.storage;
 
+import gamesys.gamesystesttask.rss.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +9,7 @@ import java.util.List;
 @Component
 public class RssItemsStorage {
 
-    @Autowired // constructor injection?
-    // what if have default constructor with stub implementation and with parameter for injection?
+    @Autowired
     private RssItemRepository rssItemRepository;
 
     public void save(RssItem rssItem) {
@@ -17,16 +17,15 @@ public class RssItemsStorage {
     }
 
     public List<RssItem> getAllItems() {
-        return rssItemRepository.findAll();
+        return rssItemRepository.getAll();
     }
-
 
     public void saveAll(List<RssItem> storedItems) {
         rssItemRepository.saveAll(storedItems);
     }
 
     public List<RssItem> get10Latest() {
-        return rssItemRepository.findTop10ByOrderByPubDateDesc();
+        return rssItemRepository.get10LatestPublishedItems();
     }
 
     public void clearStorage() {

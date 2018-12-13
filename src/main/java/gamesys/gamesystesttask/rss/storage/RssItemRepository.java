@@ -1,5 +1,6 @@
-package gamesys.gamesystesttask.rss;
+package gamesys.gamesystesttask.rss.storage;
 
+import gamesys.gamesystesttask.rss.RssItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,9 +23,8 @@ public class RssItemRepository {
 
     public void saveAndFlush(RssItem rssItem) {
         try {
-            ZonedDateTime timeStampWithZone = rssItem.getPubDate();
-            jdbcTemplate.update("insert into rss_item (id, title, description, pub_date) " + "values(?,  ?, ?, ?)",
-                    new Object[]{rssItem.getId(), rssItem.getTitle(), rssItem.getDescription(), timeStampWithZone.toInstant()});
+            jdbcTemplate.update("insert into rss_item (id, title, description, pub_date) values(?,  ?, ?, ?)",
+                    new Object[]{rssItem.getId(), rssItem.getTitle(), rssItem.getDescription(), rssItem.getPubDate().toInstant()});
         } catch (DuplicateKeyException e) {
             // skip this record
         }
@@ -47,18 +47,18 @@ public class RssItemRepository {
             }
             return new RssItem(title, description, dateTime);
         }
-
     }
 
-    public List<RssItem> findAll() {
+    public List<RssItem> getAll() {
         return jdbcTemplate.query("select * from rss_item", new RssItemRowMapper());
     }
 
+    // obviously here should be batch update, but can not find good 'insert if not exists' solution right now
     public void saveAll(List<RssItem> storedItems) {
         storedItems.stream().forEach(item -> saveAndFlush(item));
     }
 
-    public List<RssItem> findTop10ByOrderByPubDateDesc() {
+    public List<RssItem> get10LatestPublishedItems() {
         return jdbcTemplate.query("select * from rss_item order by pub_date desc FETCH FIRST 10 ROWS ONLY", new RssItemRowMapper());
     }
 }

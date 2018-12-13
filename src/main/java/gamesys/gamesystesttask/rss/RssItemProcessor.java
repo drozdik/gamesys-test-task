@@ -1,6 +1,5 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss;
 
-import gamesys.gamesystesttask.rss.RssItem;
 import org.springframework.stereotype.Component;
 
 @Component

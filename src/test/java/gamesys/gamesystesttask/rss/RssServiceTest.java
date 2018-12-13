@@ -1,7 +1,6 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss;
 
-import gamesys.gamesystesttask.http.GetBodyFromUrl;
-import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.http.HttpRssFeedReader;
 import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -33,11 +31,11 @@ public class RssServiceTest {
     private RssXmlParser rssXmlParser;
 
     @Mock
-    private GetBodyFromUrl getBodyFromUrl;
+    private HttpRssFeedReader httpRssFeedReader;
 
     @Before
     public void setUp() throws Exception {
-        when(getBodyFromUrl.getResponseBody()).thenReturn(""); // think about it
+        when(httpRssFeedReader.getRssXmlFromFeed()).thenReturn(""); // think about it
     }
 
     @Test
@@ -57,7 +55,7 @@ public class RssServiceTest {
     public void shouldParseReceivedRssXmlBodyForItems() throws Exception {
         // given
         String rssXml = "rssXml";
-        when(getBodyFromUrl.getResponseBody()).thenReturn(rssXml);
+        when(httpRssFeedReader.getRssXmlFromFeed()).thenReturn(rssXml);
 
         // when
         rssService.getRssItems();

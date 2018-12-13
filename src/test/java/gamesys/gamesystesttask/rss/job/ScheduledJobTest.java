@@ -1,4 +1,4 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss.job;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

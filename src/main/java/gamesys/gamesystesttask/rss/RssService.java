@@ -1,7 +1,6 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss;
 
-import gamesys.gamesystesttask.http.GetBodyFromUrl;
-import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.http.HttpRssFeedReader;
 import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +15,12 @@ public class RssService {
     private RssXmlParser rssXmlParser;
 
     @Autowired
-    private GetBodyFromUrl getBodyFromUrl;
+    private HttpRssFeedReader httpRssFeedReader;
 
     public List<RssItem> getRssItems() {
         String rssXml = null;
         try {
-            rssXml = getBodyFromUrl.getResponseBody();
+            rssXml = httpRssFeedReader.getRssXmlFromFeed();
         } catch (IOException e) {
             throw new RuntimeException("Cannot retrieve xml body from rss feed", e);
         }

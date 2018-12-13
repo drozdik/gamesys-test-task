@@ -1,7 +1,7 @@
-package gamesys.gamesystesttask.http;
+package gamesys.gamesystesttask.rss.http;
 
 import gamesys.gamesystesttask.rss.RssItem;
-import gamesys.gamesystesttask.rss.RssItemsStorage;
+import gamesys.gamesystesttask.rss.storage.RssItemsStorage;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,18 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.ZonedDateTime;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetAllRssItemsControllerTest {
+public class Get10LatestRssItemsControllerTest {
 
     @LocalServerPort
     private int port;

@@ -19,54 +19,36 @@ public class RssItemXmlParser {
     }
 
     private String getPubDateTextFromItemElement(String itemXml) {
-        String titleText = getPubDateElementText(itemXml);
-        if (titleText == null) {
+        String elementText = getElementBetweenTags(itemXml, "<pubDate>", "</pubDate>");
+        if (elementText == null) {
             return null;
         }
-        return titleText;
-    }
-
-    private String getPubDateElementText(String itemXml) {
-        int indexOfDescriptionStart = itemXml.indexOf("<pubDate>");
-        if (indexOfDescriptionStart == -1) {
-            return null;
-        }
-        int indexOfDescriptionEnd = itemXml.indexOf("</pubDate>");
-        return itemXml.substring(indexOfDescriptionStart + "<pubDate>".length(), indexOfDescriptionEnd);
+        return elementText;
     }
 
     private String getTitleTextFromItemElement(String itemXml) {
-        String titleText = getTitleElementText(itemXml);
-        if (titleText == null) {
+        String elementText = getElementBetweenTags(itemXml, "<title>", "</title>");
+        if (elementText == null) {
             return "";
         }
-        return stripCDATA(titleText);
-    }
-
-    private String getTitleElementText(String itemXml) {
-        int indexOfDescriptionStart = itemXml.indexOf("<title>");
-        if (indexOfDescriptionStart == -1) {
-            return null;
-        }
-        int indexOfDescriptionEnd = itemXml.indexOf("</title>");
-        return itemXml.substring(indexOfDescriptionStart + "<title>".length(), indexOfDescriptionEnd);
+        return stripCDATA(elementText);
     }
 
     private String getDescriptionTextFromItem(String itemXml) {
-        String descriptionText = getDescriptionElementText(itemXml);
-        if (descriptionText == null) {
+        String elementText = getElementBetweenTags(itemXml, "<description>", "</description>");
+        if (elementText == null) {
             return "";
         }
-        return stripCDATA(descriptionText);
+        return stripCDATA(elementText);
     }
 
-    private String getDescriptionElementText(String itemXml) {
-        int indexOfDescriptionStart = itemXml.indexOf("<description>");
-        if (indexOfDescriptionStart == -1) {
+    private String getElementBetweenTags(String itemXml, String startTag, String endTag) {
+        int indexOfStart = itemXml.indexOf(startTag);
+        if (indexOfStart == -1) {
             return null;
         }
-        int indexOfDescriptionEnd = itemXml.indexOf("</description>");
-        return itemXml.substring(indexOfDescriptionStart + "<description>".length(), indexOfDescriptionEnd);
+        int indexOfEnd = itemXml.indexOf(endTag);
+        return itemXml.substring(indexOfStart + startTag.length(), indexOfEnd);
     }
 
     private String stripCDATA(String text) {

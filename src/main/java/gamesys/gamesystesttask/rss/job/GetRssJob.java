@@ -1,7 +1,9 @@
-package gamesys.gamesystesttask;
+package gamesys.gamesystesttask.rss.job;
 
+import gamesys.gamesystesttask.rss.RssItemProcessor;
+import gamesys.gamesystesttask.rss.RssService;
 import gamesys.gamesystesttask.rss.RssItem;
-import gamesys.gamesystesttask.rss.RssItemsStorage;
+import gamesys.gamesystesttask.rss.storage.RssItemsStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
