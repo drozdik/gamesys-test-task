@@ -1,9 +1,6 @@
 package gamesys.gamesystesttask.rss;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,14 +8,15 @@ import java.time.format.DateTimeFormatter;
 public class RssItem {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     private String title;
     private String description;
+//    @Temporal(TemporalType.TIMESTAMP)
     private ZonedDateTime pubDate;
 
     public RssItem() {
+
     }
 
     public RssItem(String description) {
@@ -34,6 +32,10 @@ public class RssItem {
         this.title = title;
         this.description = description;
         this.pubDate = pubDate;
+        StringBuffer idString = new StringBuffer();
+        idString.append(title.substring(0, title.length() >= 50 ? 50 : title.length()));
+        idString.append(pubDate == null ? "" : DateTimeFormatter.RFC_1123_DATE_TIME.format(pubDate));
+        id =  idString.toString();
     }
 
     public String getDescription() {
@@ -57,7 +59,7 @@ public class RssItem {
 
         if (!title.equals(rssItem.title)) return false;
         if (!description.equals(rssItem.description)) return false;
-        return pubDate.equals(rssItem.pubDate);
+        return pubDate.isEqual(rssItem.pubDate);
     }
 
     @Override

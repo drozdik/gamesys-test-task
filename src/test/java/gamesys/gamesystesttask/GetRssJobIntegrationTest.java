@@ -33,7 +33,7 @@ public class GetRssJobIntegrationTest {
         getRssJob.execute();
 
         // then
-        assertThat(rssItemsStorage.getAllItemDescriptions(), not(empty()));
+        assertThat(rssItemsStorage.getAllItems(), not(empty()));
 
     }
 }

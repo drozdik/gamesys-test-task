@@ -45,7 +45,7 @@ public class GetAllRssItemsControllerTest {
 
     @SuppressWarnings("rawtypes")
     private ResponseEntity<List> callAllRssItemsEndpoint() {
-        String url = "http://localhost:" + port + "/rss-items";
+        String url = "http://localhost:" + port + "/latest-10-rss-items";
         return testRestTemplate.getForEntity(url, List.class);
     }
 

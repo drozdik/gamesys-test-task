@@ -16,10 +16,10 @@ public class GetAllRssItemsController {
     @Autowired
     private RssItemsStorage rssItemsStorage;
 
-    @GetMapping("/rss-items")
+    @GetMapping("/latest-10-rss-items")
     @ResponseBody
     public List<RssItem> getAllRssItems() {
-        return rssItemsStorage.getAllItems();
+        return rssItemsStorage.get10Latest();
     }
 
 }

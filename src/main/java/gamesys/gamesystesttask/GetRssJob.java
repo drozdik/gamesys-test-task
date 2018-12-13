@@ -18,6 +18,6 @@ public class GetRssJob {
 
     public void execute() {
         List<RssItem> rssItems = rssService.getRssItems();
-        rssItems.forEach(item -> itemsStorage.save(item)); // get rid of for loop
+        itemsStorage.saveAll(rssItems);
     }
 }
