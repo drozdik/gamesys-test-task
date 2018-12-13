@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasItem;
@@ -29,5 +30,18 @@ public class RssItemsStorageTest {
 
         // then
         assertThat(allRssItemDescriptions, hasItem(description));
+    }
+
+    @Test
+    public void shouldReturnStoredItems() throws Exception {
+        // given
+        RssItem item = new RssItem("title", "description", ZonedDateTime.now());
+
+        // when
+        rssItemsStorage.save(item);
+        List<RssItem> allRssItemDescriptions = rssItemsStorage.getAllItems();
+
+        // then
+        assertThat(allRssItemDescriptions, hasItem(item));
     }
 }

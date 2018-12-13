@@ -12,18 +12,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetAllRssItemDescriptionsControllerTest {
+public class GetAllRssItemsControllerTest {
 
     @LocalServerPort
     private int port;
@@ -35,34 +35,35 @@ public class GetAllRssItemDescriptionsControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void shouldReturn200WhenSendingRequestToController() throws Exception {
+    public void shouldReturn200WhenSendingRequestToGetItemsEndPoint() throws Exception {
         // when
-        ResponseEntity<List> entity = callAllRssItemDescriptionsEndpoint();
+        ResponseEntity<List> entity = callAllRssItemsEndpoint();
 
         // then
         assertThat(entity.getStatusCode(), is(HttpStatus.OK));
     }
 
     @SuppressWarnings("rawtypes")
-    private ResponseEntity<List> callAllRssItemDescriptionsEndpoint() {
-        String url = "http://localhost:" + port + "/rss-item-descriptions";
+    private ResponseEntity<List> callAllRssItemsEndpoint() {
+        String url = "http://localhost:" + port + "/rss-items";
         return testRestTemplate.getForEntity(url, List.class);
     }
 
     @Test
-    public void shouldReturnStoredItemDescriptions() throws Exception {
+    public void shouldReturnStoredItems() throws Exception {
         // given
-        String description1 = UUID.randomUUID().toString();
-        rssItemsStorage.save(new RssItem(description1));
-
-        String description2 = UUID.randomUUID().toString();
-        rssItemsStorage.save(new RssItem(description2));
+        RssItem item1 = new RssItem("t1", "d1", ZonedDateTime.now());
+        RssItem item2 = new RssItem("t2", "d2", ZonedDateTime.now());
+        rssItemsStorage.save(item1);
+        rssItemsStorage.save(item2);
 
         // when
-        ResponseEntity<List> entity = callAllRssItemDescriptionsEndpoint();
+        ResponseEntity<List> entity = callAllRssItemsEndpoint();
 
         // then
-        List<String> body = entity.getBody();
-        assertThat(body, hasItems(description1, description2));
+        List<Map<String, String>> body = entity.getBody();
+        assertThat(body, hasItems(
+                allOf(hasEntry("title", item1.getTitle()), hasEntry("description", item1.getDescription())/*, hasEntry("pubDate", item1.getPubDate().toString())*/),
+                allOf(hasEntry("title", item2.getTitle()), hasEntry("description", item2.getDescription())/*, hasEntry("pubDate", item2.getPubDate().toString())*/)));
     }
 }

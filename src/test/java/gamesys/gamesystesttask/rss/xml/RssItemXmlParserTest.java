@@ -1,10 +1,11 @@
-package gamesys.gamesystesttask.rss;
+package gamesys.gamesystesttask.rss.xml;
 
+import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.xml.RssItemXmlParser;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 

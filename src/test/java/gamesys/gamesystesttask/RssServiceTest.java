@@ -1,16 +1,16 @@
 package gamesys.gamesystesttask;
 
 import gamesys.gamesystesttask.http.GetBodyFromUrl;
-import gamesys.gamesystesttask.rss.RssXmlParser;
-import org.hamcrest.Matchers;
+import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,28 +40,28 @@ public class RssServiceTest {
     }
 
     @Test
-    public void shouldReturnParsedFromRssXmlBodyDescriptions() throws Exception {
+    public void shouldReturnParsedFromRssXmlBodyItems() throws Exception {
         // given
-        List<String> parsedDescriptions = Arrays.asList("description1", "description2");
-        when(rssXmlParser.parseAllItemDescriptions(anyString())).thenReturn(parsedDescriptions);
+        List<RssItem> parsedItems = Arrays.asList(new RssItem("t1", "d1", ZonedDateTime.now()), new RssItem("t2", "d2", ZonedDateTime.now()));
+        when(rssXmlParser.parseAllItems(anyString())).thenReturn(parsedItems);
 
         // when
-        List<String> descriptions = rssService.getRssItemDescriptions();
+        List<RssItem> items = rssService.getRssItems();
 
         // then
-        assertThat(descriptions, contains(parsedDescriptions.toArray()));
+        assertThat(items, contains(parsedItems.toArray()));
     }
 
     @Test
-    public void shouldParseReceivedRssXmlBody() throws Exception {
+    public void shouldParseReceivedRssXmlBodyForItems() throws Exception {
         // given
         String rssXml = "rssXml";
         when(getBodyFromUrl.getResponseBody()).thenReturn(rssXml);
 
         // when
-        rssService.getRssItemDescriptions();
+        rssService.getRssItems();
 
         // then
-        verify(rssXmlParser).parseAllItemDescriptions(rssXml);
+        verify(rssXmlParser).parseAllItems(rssXml);
     }
 }

@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,10 +33,10 @@ public class GetRssJobTest {
     private RssItemsStorage itemsStorage;
 
     @Test
-    public void shouldStoreReceivedDescription() throws Exception {
+    public void shouldStoreReceivedItems() throws Exception {
         // given
-        List<String> receivedDescriptions = Arrays.asList("description1");
-        when(rssService.getRssItemDescriptions()).thenReturn(receivedDescriptions);
+        List<RssItem> receivedItems = Arrays.asList(new RssItem("t1", "d1", ZonedDateTime.now()));
+        when(rssService.getRssItems()).thenReturn(receivedItems);
 
         // when
         getRssJob.execute();
@@ -43,6 +44,6 @@ public class GetRssJobTest {
         // then
         ArgumentCaptor<RssItem> captor = ArgumentCaptor.forClass(RssItem.class);
         verify(itemsStorage).save(captor.capture());
-        assertThat(captor.getValue().getDescription(), is(receivedDescriptions.get(0)));
+        assertThat(captor.getValue(), is(receivedItems.get(0)));
     }
 }

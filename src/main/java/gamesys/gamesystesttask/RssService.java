@@ -1,7 +1,8 @@
 package gamesys.gamesystesttask;
 
 import gamesys.gamesystesttask.http.GetBodyFromUrl;
-import gamesys.gamesystesttask.rss.RssXmlParser;
+import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class RssService {
     @Autowired
     private GetBodyFromUrl getBodyFromUrl;
 
-    public List<String> getRssItemDescriptions() { // it can fail to retrieve new items, throw exception
+    public List<RssItem> getRssItems() {
         String rssXml = null;
         try {
             rssXml = getBodyFromUrl.getResponseBody();
@@ -26,7 +27,6 @@ public class RssService {
             System.out.println(e);
         }
 
-        List<String> descriptions = rssXmlParser.parseAllItemDescriptions(rssXml);
-        return descriptions;
+        return rssXmlParser.parseAllItems(rssXml);
     }
 }

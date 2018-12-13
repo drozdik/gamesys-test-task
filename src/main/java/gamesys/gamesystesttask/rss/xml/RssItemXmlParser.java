@@ -1,6 +1,6 @@
-package gamesys.gamesystesttask.rss;
+package gamesys.gamesystesttask.rss.xml;
 
-import org.springframework.stereotype.Component;
+import gamesys.gamesystesttask.rss.RssItem;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

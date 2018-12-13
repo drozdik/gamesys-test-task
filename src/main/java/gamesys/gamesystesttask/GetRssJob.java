@@ -17,7 +17,7 @@ public class GetRssJob {
 
 
     public void execute() {
-        List<String> rssItemDescriptions = rssService.getRssItemDescriptions();
-        rssItemDescriptions.forEach(description -> itemsStorage.save(new RssItem(description))); // get rid of for loop
+        List<RssItem> rssItems = rssService.getRssItems();
+        rssItems.forEach(item -> itemsStorage.save(item)); // get rid of for loop
     }
 }

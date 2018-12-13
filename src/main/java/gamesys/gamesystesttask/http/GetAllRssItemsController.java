@@ -11,16 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-public class GetAllRssItemDescriptionsController {
+public class GetAllRssItemsController {
 
     @Autowired
     private RssItemsStorage rssItemsStorage;
 
-    @GetMapping("/rss-item-descriptions")
+    @GetMapping("/rss-items")
     @ResponseBody
-    public List<String> getAllRssItemDescriptions() {
-//        rssItemsStorage.save(new RssItem(UUID.randomUUID().toString()));
-        return rssItemsStorage.getAllItemDescriptions();
+    public List<RssItem> getAllRssItems() {
+        return rssItemsStorage.getAllItems();
     }
 
 }

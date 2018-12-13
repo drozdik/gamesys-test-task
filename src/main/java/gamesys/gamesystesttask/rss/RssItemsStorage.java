@@ -26,4 +26,7 @@ public class RssItemsStorage {
     }
 
 
+    public List<RssItem> getAllItems() {
+        return rssItemRepository.findAll();
+    }
 }

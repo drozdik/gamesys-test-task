@@ -1,26 +1,27 @@
-package gamesys.gamesystesttask.rss;
+package gamesys.gamesystesttask.rss.xml;
 
+import gamesys.gamesystesttask.rss.RssItem;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class RssXmlParser {
 
     private RssItemXmlParser rssItemXmlParser = new RssItemXmlParser();
 
-    public List<String> parseAllItemDescriptions(String multipleItemsRssXml) {
-        List<String> allItemXmls = getAllItemXmls(multipleItemsRssXml);
-        return allItemXmls.stream()
-                .map(itemXml -> rssItemXmlParser.parse(itemXml).getDescription())
-                .collect(Collectors.toList());
+    public List<RssItem> parseAllItems(String rssXml) {
+        return getAllItemXmls(rssXml).stream()
+                .map(itemXml -> rssItemXmlParser.parse(itemXml))
+                .collect(toList());
     }
 
     private List<String> getAllItemXmls(String rssXml) {
-        int indexOfItemOpening = 0;
-        int indexOfItemClosing = 0;
+        int indexOfItemOpening;
+        int indexOfItemClosing;
         int indexOfItemEnd = 0;
         List<String> items = new ArrayList<>();
 
@@ -35,5 +36,4 @@ public class RssXmlParser {
         }
         return items;
     }
-
 }
