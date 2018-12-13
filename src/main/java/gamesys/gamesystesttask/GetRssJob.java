@@ -14,10 +14,13 @@ public class GetRssJob {
     private RssService rssService;
     @Autowired
     private RssItemsStorage itemsStorage;
+    @Autowired
+    private RssItemProcessor itemProcessor;
 
 
     public void execute() {
         List<RssItem> rssItems = rssService.getRssItems();
+        rssItems.forEach(item -> itemProcessor.prependSimonSays(item));
         itemsStorage.saveAll(rssItems);
     }
 }

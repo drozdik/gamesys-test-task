@@ -15,10 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,6 +31,8 @@ public class GetRssJobTest {
     private RssService rssService;
     @Mock
     private RssItemsStorage itemsStorage;
+    @Mock
+    private RssItemProcessor itemProcessor;
 
     @Test
     public void shouldStoreReceivedItems() throws Exception {
@@ -46,5 +47,18 @@ public class GetRssJobTest {
         ArgumentCaptor<List<RssItem>> captor = ArgumentCaptor.forClass(List.class);
         verify(itemsStorage).saveAll(captor.capture());
         assertThat(captor.getValue(), containsInAnyOrder(receivedItems.toArray()));
+    }
+
+    @Test
+    public void shouldProcessItems() throws Exception {
+        // given
+        List<RssItem> receivedItems = Arrays.asList(new RssItem("t1", "d1", ZonedDateTime.now()));
+        when(rssService.getRssItems()).thenReturn(receivedItems);
+
+        // when
+        getRssJob.execute();
+
+        // then
+        verify(itemProcessor, times(receivedItems.size())).prependSimonSays(Mockito.any(RssItem.class));
     }
 }
