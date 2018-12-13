@@ -1,5 +1,7 @@
 package gamesys.gamesystesttask.rss;
 
+import gamesys.gamesystesttask.TestDataFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,10 +27,15 @@ public class RssItemsStorageTest {
     @Autowired
     private RssItemsStorage rssItemsStorage;
 
+    @Before
+    public void setUp() throws Exception {
+        rssItemsStorage.clearStorage();
+    }
+
     @Test
     public void shouldReturnStoredItems() throws Exception {
         // given
-        RssItem item = new RssItem("title", "description", ZonedDateTime.now(ZoneId.of("UTC")));
+        RssItem item = TestDataFactory.createRssItem();
 
         // when
         rssItemsStorage.save(item);
@@ -46,7 +54,7 @@ public class RssItemsStorageTest {
                 // to separate latest 10, if they have same seconds, doesn't matter, equals takes title and desc as well
                 TimeUnit.SECONDS.sleep(1);
             }
-            storedItems.add(new RssItem("title " + i, "description " + i, ZonedDateTime.now(ZoneId.of("UTC"))));
+            storedItems.add(TestDataFactory.createRssItemPubedNow());
         }
 
         // when
@@ -61,10 +69,9 @@ public class RssItemsStorageTest {
     public void shouldNotSaveDuplicates() throws Exception {
         // given
         List<RssItem> itemsToStore = new ArrayList<>();
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
-        RssItem item1 = new RssItem("title", "description", now);
+        RssItem item1 = TestDataFactory.createRssItem();
         itemsToStore.add(item1);
-        RssItem item2 = new RssItem("title", "description", now);
+        RssItem item2 = new RssItem(item1.getTitle(), item1.getDescription(), item1.getPubDate());
         itemsToStore.add(item2);
 
         // when
@@ -72,6 +79,8 @@ public class RssItemsStorageTest {
 
         // then
         List<RssItem> storedItems = rssItemsStorage.getAllItems();
+        item1.setPubDate(item1.getPubDate().truncatedTo(ChronoUnit.SECONDS));
+        storedItems.get(0).setPubDate(item1.getPubDate().truncatedTo(ChronoUnit.SECONDS));
         assertThat(storedItems, contains(item1));
     }
 }

@@ -1,10 +1,7 @@
 package gamesys.gamesystesttask.rss;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,39 +9,29 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Repository
-public class RssItemRepository /*interface extends JpaRepository<RssItem, Long> {
+public class RssItemRepository {
 
-    List<RssItem> findTop10ByOrderByPubDateDesc();*/ {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-/*    public int deleteById(long id) {
-        return jdbcTemplate.update("delete from student where id=?", new Object[] { id });
-    }
-
-    public int insert(Student student) {
-    }
-
-    public int update(Student student) {
-        return jdbcTemplate.update("update student " + " set name = ?, passport_number = ? " + " where id = ?",
-                new Object[] { student.getName(), student.getPassportNumber(), student.getId() });
-    }*/
 
     public void saveAndFlush(RssItem rssItem) {
         try {
             ZonedDateTime timeStampWithZone = rssItem.getPubDate();
-//            Timestamp timestamp = new Timestamp(timeStampWithZone.toEpochSecond());
             jdbcTemplate.update("insert into rss_item (id, title, description, pub_date) " + "values(?,  ?, ?, ?)",
                     new Object[]{rssItem.getId(), rssItem.getTitle(), rssItem.getDescription(), timeStampWithZone.toInstant()});
-
         } catch (DuplicateKeyException e) {
             // skip this record
         }
+    }
+
+    public void clear() {
+        jdbcTemplate.update("DELETE FROM RSS_ITEM");
     }
 
     static class RssItemRowMapper implements RowMapper<RssItem> {

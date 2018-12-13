@@ -1,31 +1,17 @@
 package gamesys.gamesystesttask.rss;
 
-import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity // separate entity from pojo?
 public class RssItem {
 
-    @Id
     private String id;
-
     private String title;
     private String description;
-//    @Temporal(TemporalType.TIMESTAMP)
     private ZonedDateTime pubDate;
 
     public RssItem() {
 
-    }
-
-    public RssItem(String description) {
-        this.description = description;
-    }
-
-    public RssItem(String title, String description) {
-        this.description = description;
-        this.title = title;
     }
 
     public RssItem(String title, String description, ZonedDateTime pubDate) {
@@ -48,6 +34,10 @@ public class RssItem {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setPubDate(ZonedDateTime pubDate) {
+        this.pubDate = pubDate;
     }
 
     public ZonedDateTime getPubDate() {
@@ -86,4 +76,6 @@ public class RssItem {
     public String getId() {
         return id;
     }
+
+
 }

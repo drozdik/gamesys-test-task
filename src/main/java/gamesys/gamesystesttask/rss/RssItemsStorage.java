@@ -28,4 +28,8 @@ public class RssItemsStorage {
     public List<RssItem> get10Latest() {
         return rssItemRepository.findTop10ByOrderByPubDateDesc();
     }
+
+    public void clearStorage() {
+        rssItemRepository.clear();
+    }
 }
