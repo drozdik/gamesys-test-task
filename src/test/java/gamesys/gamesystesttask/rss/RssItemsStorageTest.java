@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class RssItemsStorageTest {
     @Test
     public void shouldReturnStoredItems() throws Exception {
         // given
-        RssItem item = new RssItem("title", "description", ZonedDateTime.now());
+        RssItem item = new RssItem("title", "description", ZonedDateTime.now(ZoneId.of("UTC")));
 
         // when
         rssItemsStorage.save(item);
@@ -44,7 +46,7 @@ public class RssItemsStorageTest {
                 // to separate latest 10, if they have same seconds, doesn't matter, equals takes title and desc as well
                 TimeUnit.SECONDS.sleep(1);
             }
-            storedItems.add(new RssItem("title " + i, "description " + i, ZonedDateTime.now()));
+            storedItems.add(new RssItem("title " + i, "description " + i, ZonedDateTime.now(ZoneId.of("UTC"))));
         }
 
         // when
@@ -59,7 +61,7 @@ public class RssItemsStorageTest {
     public void shouldNotSaveDuplicates() throws Exception {
         // given
         List<RssItem> itemsToStore = new ArrayList<>();
-        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
         RssItem item1 = new RssItem("title", "description", now);
         itemsToStore.add(item1);
         RssItem item2 = new RssItem("title", "description", now);

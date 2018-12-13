@@ -82,4 +82,8 @@ public class RssItem {
                 ", pubDate=" + DateTimeFormatter.RFC_1123_DATE_TIME.format(pubDate) +
                 '}';
     }
+
+    public String getId() {
+        return id;
+    }
 }
