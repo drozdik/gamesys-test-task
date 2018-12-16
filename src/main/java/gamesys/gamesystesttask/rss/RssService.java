@@ -17,7 +17,7 @@ public class RssService {
     @Autowired
     private HttpRssFeedReader httpRssFeedReader;
 
-    public List<RssItem> getRssItems() {
+    public List<RssItem> getRssItems() throws RssItemsRetrievingException {
         String rssXml = null;
         try {
             rssXml = httpRssFeedReader.getRssXmlFromFeed();
@@ -25,6 +25,10 @@ public class RssService {
             throw new RuntimeException("Cannot retrieve xml body from rss feed", e);
         }
 
-        return rssXmlParser.parseAllItems(rssXml);
+        try {
+            return rssXmlParser.parseAllItems(rssXml);
+        } catch (RssXmlParsingException e) {
+            throw new RssItemsRetrievingException(e);
+        }
     }
 }

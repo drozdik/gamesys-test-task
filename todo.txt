@@ -24,3 +24,5 @@ disable scheduling for tests
 there is problem we should accept >> if there are more than 10 items which has same pubDate, with second precision, then
 there is no guarantee in which order they will be returened via end point, we of course can add something like order number to store in same
 order as they were read
+
+checked vs unchecked

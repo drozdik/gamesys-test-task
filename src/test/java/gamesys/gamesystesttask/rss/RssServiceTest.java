@@ -3,7 +3,9 @@ package gamesys.gamesystesttask.rss;
 import gamesys.gamesystesttask.rss.http.HttpRssFeedReader;
 import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -62,5 +64,20 @@ public class RssServiceTest {
 
         // then
         verify(rssXmlParser).parseAllItems(rssXml);
+    }
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void shouldThrowExceptionIfParsingFailed() throws Exception {
+        // given
+        when(rssXmlParser.parseAllItems(anyString())).thenThrow(RssXmlParsingException.class);
+
+        // expect
+        expectedException.expect(RssItemsRetrievingException.class);
+
+        // when
+        rssService.getRssItems();
     }
 }

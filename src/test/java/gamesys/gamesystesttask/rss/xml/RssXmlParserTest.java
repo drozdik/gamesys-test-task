@@ -1,6 +1,7 @@
 package gamesys.gamesystesttask.rss.xml;
 
 import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.RssXmlParsingException;
 import gamesys.gamesystesttask.rss.xml.RssXmlParser;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,5 +66,16 @@ public class RssXmlParserTest {
 
         // then
         assertThat(allItem, hasItems(rssItem1, rssItem2));
+    }
+
+
+
+    @Test
+    public void shouldThrowExceptionIfXmlUnparseable() throws Exception {
+        // expect
+        expectedException.expect(RssXmlParsingException.class);
+
+        // when
+        parser.parseAllItems(multipleItemsRssXml.replaceAll("</item>", "</FooBaritem>"));
     }
 }

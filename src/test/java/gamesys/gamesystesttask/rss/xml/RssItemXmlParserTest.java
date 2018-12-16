@@ -1,6 +1,7 @@
 package gamesys.gamesystesttask.rss.xml;
 
 import gamesys.gamesystesttask.rss.RssItem;
+import gamesys.gamesystesttask.rss.RssXmlParsingException;
 import gamesys.gamesystesttask.rss.xml.RssItemXmlParser;
 import org.junit.Rule;
 import org.junit.Test;
@@ -79,7 +80,7 @@ public class RssItemXmlParserTest {
     @Test
     public void shouldThrowExceptionIfFailedToStripCDATAFromDescription() throws Exception {
         // expect
-        expectedException.expect(IllegalStateException.class);
+        expectedException.expect(RssXmlParsingException.class);
 
         // when
         itemParser.parse(rssItemXmlWithBrokenCDATAIinDescription);
@@ -109,7 +110,7 @@ public class RssItemXmlParserTest {
     @Test
     public void shouldThrowExceptionIfFailedToStripCDATAFromTitle() throws Exception {
         // expect
-        expectedException.expect(IllegalStateException.class);
+        expectedException.expect(RssXmlParsingException.class);
 
         // when
         itemParser.parse(rssItemXmlWithBrokenCDATAIinTitle);
