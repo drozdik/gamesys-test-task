@@ -1,5 +1,6 @@
 package gamesys.gamesystesttask.rss.http;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,10 +12,11 @@ import java.net.URLConnection;
 @Component
 public class HttpRssFeedReader {
 
-    public static final String RSS_FEED_URL = "http://lorem-rss.herokuapp.com/feed?unit=second&interval=30";
+    @Value("${rss.url}")
+    private String rssUrl = "http://lorem-rss.herokuapp.com/feed?unit=second&interval=30";
 
     public String getRssXmlFromFeed() throws IOException {
-        URL url = new URL(RSS_FEED_URL);
+        URL url = new URL(rssUrl);
         URLConnection yc = url.openConnection();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(

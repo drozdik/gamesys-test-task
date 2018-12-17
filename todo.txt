@@ -11,7 +11,7 @@ check exceptional cases while parsing
 
 check profiles.. development / production etc
 
-make one acceptance test, stub for rss feed, set via configuration file and run happy case + one fail case?
+make one acceptance test, stub for rss feed,    set via configuration file and run happy case + one fail case?
 
 make able to pick another port, if guys have 8080 busy
 
